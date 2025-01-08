@@ -35,11 +35,11 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_CONTAINER_REGISTRY: "your-azure-container-registry"
-  CONTAINER_NAME: "your-container-name"
-  RESOURCE_GROUP: "your-resource-group"
-  CLUSTER_NAME: "your-cluster-name"
-  DEPLOYMENT_MANIFEST_PATH: "your-deployment-manifest-path"
+  AZURE_CONTAINER_REGISTRY: "helennow"
+  CONTAINER_NAME: "kub-demo"
+  RESOURCE_GROUP: "ahmad-jaber-1"
+  CLUSTER_NAME: "helennow"
+  DEPLOYMENT_MANIFEST_PATH: "./deployment.yaml"
 
 jobs:
   buildImage:
