@@ -39,7 +39,7 @@ env:
   CONTAINER_NAME: "kub-demo"
   RESOURCE_GROUP: "ahmad-jaber-1"
   CLUSTER_NAME: "helennow"
-  DEPLOYMENT_MANIFEST_PATH: "./deployment.yaml"
+  DEPLOYMENT_MANIFEST_PATH: "deployment.yaml"
 
 jobs:
   buildImage:
