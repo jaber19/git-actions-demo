@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-app
+      tier: backend
+  template:
+    metadata: 
+      labels:
+        app: demo-app
+        tier: backend
+    spec: 
+      containers:
+        - name: demo-node
+          image: jaber19/kub-demo3:5
+          #resources:
+          #  requests:
+          #    memory: "128Mi"                 # Minimum memory required
+          #    cpu: "250m"                     # Minimum CPU required (250 milliCPU = 0.25 vCPU)
+          #  limits:
+          #    memory: "256Mi"                 # Maximum memory allowed
+          #    cpu: "500m"                     # Maximum CPU allowed (500 milliCPU = 0.5 vCPU)
+
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          livenessProbe:
+            httpGet:
+              path: /liveness 
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readiness  
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 6
