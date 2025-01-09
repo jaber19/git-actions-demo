@@ -50,9 +50,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
-      - name: Deploy to Azure Kubernetes Service
-        uses: azure/aks-deploy@v1
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          cluster-name: ${{ secrets.CLUSTER_NAME }}
-          deployment-manifest: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+      - name: Deploy using `az` CLI
+        run: |
+          az aks get-credentials --resource-group ${{ env.RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }}
+          kubectl apply -f ${{ env.DEPLOYMENT_MANIFEST_PATH }}
