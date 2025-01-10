@@ -60,8 +60,8 @@ jobs:
 
     - name: Get AKS credentials
       run: |
-        az aks get-credentials --resource-group <resource-group-name> --name <aks-cluster-name> --overwrite-existing
+        az aks get-credentials --resource-group ahmad-jaber-1 --name helennow --overwrite-existing
 
     - name: Deploy to AKS
       run: |
-        kubectl apply -f k8s-deployment.yaml
+        kubectl apply -f="deployment.yaml"
