@@ -27,41 +27,27 @@
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
 # For more options with the actions used below please refer to https://github.com/Azure/login
 
-name: Deploy to AKS
 
-on:
-  push:
-    branches:
-      - main
+
+# File: .github/workflows/workflow.yml
+
+on: [push]
+
+name: Run Azure Login With a Service Principal Secret
 
 jobs:
-  deploy:
+
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
 
-    - name: Log in to Azure
-      uses: azure/login@v1
+    - uses: azure/login@v2
       with:
-        creds: |
-          {
-            "clientId": "49f30bc0-33d9-41aa-8a8f-a86cb1525900",
-            "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}",
-            "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}",
-            "tenantId": "${{ secrets.AZURE_TENANT_ID }}"
-          }
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v3
+    - name: Azure CLI script
+      uses: azure/cli@v2
       with:
-        version: 'latest'
-
-    - name: Get AKS credentials
-      run: |
-        az aks get-credentials --resource-group ahmad-jaber-1 --name helennow --overwrite-existing
-
-    - name: Deploy to AKS
-      run: |
-        kubectl apply -f="deployment.yaml"
+        azcliversion: latest
+        inlineScript: |
+          az account show
