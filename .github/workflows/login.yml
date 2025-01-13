@@ -1,5 +1,7 @@
 # File: .github/workflows/workflow.yml
 
+# File: .github/workflows/workflow.yml
+
 on: [push]
 
 name: Run Azure Login With a Service Principal Secret
@@ -10,10 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Azure CLI login
-      run: az login --service-principal --username ${{ secrets.AZURE_CLIENT_ID }} \
-            --password ${{ secrets.AZURE_CLIENT_SECRET }} \
-            --tenant ${{ secrets.AZURE_TENANT_ID }}
+    - uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Azure CLI script
       uses: azure/cli@v2
