@@ -26,10 +26,10 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t <REGISTRY_NAME>.azurecr.io/<IMAGE_NAME>:${{ github.sha }} .
+        docker build -t helennow.azurecr.io/kub-demo:${{ github.sha }} .
     - name: Push Docker Image
       run: |
-        docker push <REGISTRY_NAME>.azurecr.io/<IMAGE_NAME>:${{ github.sha }}
+        docker push helennow.azurecr.io/kub-demo:${{ github.sha }}
 
 
 
