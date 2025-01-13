@@ -34,6 +34,7 @@ jobs:
 
 
   deploy:
+    if: success()
     name: Deploy to AKS
     runs-on: ubuntu-latest
     steps:
