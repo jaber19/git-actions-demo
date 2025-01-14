@@ -63,9 +63,8 @@ jobs:
 
     - name: Deploy to AKS
       run: |
-        kubectl set image deployment/<DEPLOYMENT_NAME> \
-          <CONTAINER_NAME>=<REGISTRY_URL>/<IMAGE_NAME>:<IMAGE_TAG>
-        kubectl rollout status deployment/<DEPLOYMENT_NAME>
+         kubectl apply -f deployment.yaml --record
+         kubectl set image deployment/demo-app-deployment demo-node=${{ secrets.ACR_NAME }}:${{ github.sha }} --record
 
     
     
