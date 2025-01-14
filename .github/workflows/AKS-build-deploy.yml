@@ -64,7 +64,7 @@ jobs:
     - name: Deploy to AKS
       run: |
          kubectl apply -f deployment.yaml --record
-         kubectl set image deployment/demo-app-deployment demo-node=${{ secrets.ACR_NAME }}:${{ github.sha }} --record
+         kubectl set image deployment/demo-app-deployment demo-node=${{ secrets.ACR_USERNAME }}.azurecr.io/kub-demo:${{ github.sha }} --record
 
     
     
