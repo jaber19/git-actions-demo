@@ -1,0 +1,70 @@
+# File: .github/workflows/workflow.yml
+
+# File: .github/workflows/workflow.yml
+
+on: [push]
+
+name: Run Azure Login With a Service Principal Secret
+
+jobs:
+
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Log in to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: helennow.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build Docker Image
+      run: |
+        docker build -t helennow.azurecr.io/kub-demo:${{ github.sha }} .
+    - name: Push Docker Image
+      run: |
+        docker push helennow.azurecr.io/kub-demo:${{ github.sha }}
+
+
+
+  deploy:
+    needs: [build-and-push]
+    name: Deploy to AKS
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure CLI script
+      uses: azure/cli@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show
+
+    - name: Configure kubectl for AKS
+      run: |
+        az aks get-credentials \
+          --resource-group ahmad-jaber-1 \
+          --name helennow \
+          --overwrite-existing
+
+    - name: Deploy to AKS
+      run: |
+         kubectl apply -f deployment.yaml --record
+         kubectl set image deployment/demo-app-deployment demo-node=${{ secrets.ACR_USERNAME }}.azurecr.io/kub-demo:${{ github.sha }} --record
+
+    
+    
