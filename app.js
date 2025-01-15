@@ -8,7 +8,7 @@ var ready = true;
 app.get('/', (req, res) => {
   console.log(`Pod ${podName} is executing normal get req.`);
   res.send(`
-    <h1>Hello from this NodeJS app!!!!!!</h1>
+    <h1>Hello from this NodeJS app!</h1>
   `);
 });
 
