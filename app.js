@@ -1,15 +1,24 @@
 const express = require('express');
 
 const app = express();
-
+app.use(express.json());
 const podName = process.env.POD_NAME;
 var ready = true;
 
-app.get('/', (req, res) => {
-  console.log(`Pod ${podName} is executing normal get req.`);
-  res.send(`
-    <h1>Hello from this NodeJS app!</h1>
-  `);
+app.get('/greet', (req, res) => {
+  console.log(`Pod ${podName} is executing the greetings`);
+  res.send('Hello! Welcome to the Express app.');
+});
+
+app.post('/add', (req, res) => {
+  const { num1, num2 } = req.body;
+
+  if (typeof num1 !== 'number' || typeof num2 !== 'number') {
+    return res.status(400).json({ error: 'Both inputs must be numbers' });
+  }
+
+  const result = num1 + num2;
+  res.json({ result });
 });
 
 app.get('/error', (req, res) => {
@@ -48,4 +57,8 @@ app.get('/readiness', (req,res)=> {
 
 
 
-app.listen(8080);
+const server = app.listen(3000, () => {
+  console.log(`Server is running on port 3000`);
+});
+
+module.exports = {app, server};
