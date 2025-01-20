@@ -5,10 +5,6 @@ app.use(express.json());
 const podName = process.env.POD_NAME;
 var ready = true;
 
-app.get('/greet', (req, res) => {
-  console.log(`Pod ${podName} is executing the greetings`);
-  res.send('Hello! Welcome to the Express app.');
-});
 
 app.post('/add', (req, res) => {
   const { num1, num2 } = req.body;
@@ -21,10 +17,6 @@ app.post('/add', (req, res) => {
   res.json({ result });
 });
 
-app.get('/error', (req, res) => {
-  console.log(`Pod ${podName} is executing the error process.exit.`);
-  process.exit(1);
-});
 
 app.get('/make-unready', (req, res) => {
   ready = false; // Simulate temporary unavailability
