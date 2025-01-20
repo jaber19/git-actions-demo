@@ -2,7 +2,10 @@
 
 # File: .github/workflows/workflow.yml
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 name: Run Azure Login With a Service Principal Secret
 
