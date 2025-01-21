@@ -45,6 +45,13 @@ app.get('/loop', (req, res) => {
   while(true){}
 });
 
+app.get('/loop2', (req, res) => {
+  
+  res.send(`Pod ${podName} going into infinite loop...`);
+
+  while(true){}
+});
+
 app.get('/liveness', (req,res)=> {
 
   res.send('Alive!')
