@@ -10,8 +10,8 @@ on:
      - main
 jobs:
 
-  Unit-testing-SCA:
-    name: SonarQube
+  testing:
+    name: unit-SCA
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

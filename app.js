@@ -26,6 +26,10 @@ app.get('/error', (req, res) => {
   process.exit(1);
 });
 
+app.get('/newgreet', (req, res) => {
+  res.send('Hello! This is the other greet route.');
+});
+
 app.get('/make-unready', (req, res) => {
   ready = false; // Simulate temporary unavailability
   setTimeout(() => {
