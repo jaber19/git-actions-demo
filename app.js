@@ -10,6 +10,11 @@ app.get('/greet', (req, res) => {
   res.send('Hello! Welcome to the Express app.');
 });
 
+app.get('/greet2', (req, res) => {
+  console.log(`Pod ${podName} is executing the greetings`);
+  res.send('Hello! Welcome to the Express app.');
+});
+
 app.post('/add', (req, res) => {
   const { num1, num2 } = req.body;
 
